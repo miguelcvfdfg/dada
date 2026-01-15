@@ -2,175 +2,167 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>PC Launcher</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Sense Atualizada</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI, sans-serif;user-select:none}
-html,body{width:100%;height:100%;overflow:hidden;background:#0b0f1a}
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: linear-gradient(180deg, #0b0b0b, #141414);
+        color: #fff;
+    }
 
-/* FORÇA LANDSCAPE */
-#rotate{
-  position:fixed;inset:0;
-  background:#000;color:#0ff;
-  display:none;align-items:center;justify-content:center;
-  z-index:9999;font-size:22px;
-}
+    .container {
+        max-width: 420px;
+        margin: 40px auto;
+        padding: 20px;
+    }
 
-/* DESKTOP */
-#desktop{
-  width:100%;height:100%;
-  background: blue; /* Desktop em branco */
-  position:relative;
-}
+    h1 {
+        text-align: center;
+        font-size: 22px;
+        margin-bottom: 25px;
+        font-weight: bold;
+    }
 
-/* ICONES */
-.icon{
-  width:80px;
-  text-align:center;
-  color:#fff;
-  position:absolute;
-  cursor:pointer;
-}
-.icon img{width:48px}
+    .card {
+        background: #1b1b1b;
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 0 20px rgba(255, 180, 0, 0.15);
+    }
 
-/* TASKBAR */
-#taskbar{
-  position:absolute;
-  bottom:0;width:100%;height:42px;
-  background:#020818;
-  border-top:1px solid #0ff;
-  display:flex;align-items:center;
-  padding:0 10px;
-}
-#start{
-  background:#0ff;
-  padding:6px 14px;
-  font-weight:bold;
-  border:none;
-}
-#clock{margin-left:auto;color:#fff}
+    label {
+        display: block;
+        font-size: 14px;
+        margin-bottom: 6px;
+        color: #ffcc66;
+    }
 
-/* MENU DE APPS */
-#menu{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.95);
-  display:none;
-  flex-wrap:wrap;
-  padding:40px;
-}
-.menuApp{
-  width:100px;
-  margin:20px;
-  text-align:center;
-  color:#0ff;
-  cursor:pointer;
-}
-.menuApp img{width:48px}
+    select {
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        background: #2a2a2a;
+        color: #fff;
+        margin-bottom: 15px;
+        font-size: 15px;
+    }
 
-/* CURSOR */
-#cursor{
-  position:fixed;
-  width:18px;height:18px;
-  border-left:3px solid #0ff;
-  border-top:3px solid #0ff;
-  transform:rotate(45deg);
-  pointer-events:none;
-  display:none;
-  z-index:10000;
-}
+    button {
+        width: 100%;
+        padding: 14px;
+        background: linear-gradient(90deg, #ff9f00, #ffcc00);
+        border: none;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        color: #000;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    .resultado {
+        margin-top: 20px;
+        padding: 15px;
+        background: #111;
+        border-radius: 10px;
+        display: none;
+    }
+
+    .resultado p {
+        margin: 6px 0;
+        font-size: 14px;
+    }
+
+    .footer {
+        text-align: center;
+        margin-top: 25px;
+        font-size: 12px;
+        color: #777;
+    }
 </style>
 </head>
 
 <body>
+<div class="container">
+    <h1>gerador de sense do Miguel•
 
-<div id="rotate">🔄 Vire o celular para DEITADO</div>
+    <div class="card">
+        <label>Selecione a marca</label>
+        <select id="marca">
+            <option value="">Selecione a marca</option>
+            <option value="Samsung">Samsung</option>
+            <option value="Xiaomi">Xiaomi</option>
+            <option value="Motorola">Motorola</option>
+            <option value="iPhone">iPhone</option>
+        </select>
 
-<div id="desktop">
+        <label>Selecione o modelo</label>
+        <select id="modelo">
+            <option value="">Primeiro selecione a marca</option>
+        </select>
 
-  <!-- ICONES DO DESKTOP -->
-  <div class="icon" style="top:40px;left:40px" data-url="https://sites.google.com/view/pc-launcher-miguel/in%C3%ADcio">
-    <img src="https://cdn-icons-png.flaticon.com/512/3524/3524636.png">
-    <div>Sistema</div>
-  </div>
+        <button onclick="gerarSense()">GERAR</button>
 
-  <div class="icon" style="top:40px;left:140px" data-url="https://youtube.com">
-    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-    <div>YouTube</div>
-  </div>
-
-  <div class="icon" style="top:40px;left:240px" data-url="https://play.google.com">
-    <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png">
-    <div>Play Store</div>
-  </div>
-
-  <!-- MENU DE APPS -->
-  <div id="menu">
-    <div class="menuApp" data-url="https://google.com">
-      <img src="https://cdn-icons-png.flaticon.com/512/281/281764.png">
-      <div>Chrome</div>
+        <div class="resultado" id="resultado">
+            <p><strong>DPI:</strong> <span id="dpi"></span></p>
+            <p><strong>Sensibilidade Geral:</strong> <span id="geral"></span></p>
+            <p><strong>Mira Red Dot:</strong> <span id="red"></span></p>
+            <p><strong>Mira 2x:</strong> <span id="x2"></span></p>
+            <p><strong>Mira 4x:</strong> <span id="x4"></span></p>
+            <p><strong>Mira AWM:</strong> <span id="awm"></span></p>
+        </div>
     </div>
-    <div class="menuApp" data-url="https://youtube.com">
-      <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png">
-      <div>YouTube</div>
-    </div>
-    <div class="menuApp" data-url="https://web.whatsapp.com">
-      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png">
-      <div>WhatsApp</div>
-    </div>
-    <div class="menuApp" data-url="https://play.google.com/store/apps/details?id=com.dts.freefireth">
-      <img src="https://cdn-icons-png.flaticon.com/512/5968/5968755.png">
-      <div>Free Fire</div>
-    </div>
-  </div>
 
-  <!-- TASKBAR -->
-  <div id="taskbar">
-    <button id="start">START</button>
-    <div id="clock"></div>
-  </div>
+    <div class="footer">
+        xscmiguel Sense Generator ©
+    </div>
 </div>
 
-<div id="cursor"></div>
-
 <script>
-/* ROTACAO */
-function check(){
-  rotate.style.display = innerHeight>innerWidth ? "flex":"none";
+const modelos = {
+    Samsung: ["A10", "A20", "A30", "A50", "S21"],
+    Xiaomi: ["Redmi 9", "Redmi Note 10", "Poco X3"],
+    Motorola: ["G20", "G30", "G60"],
+    iPhone: ["iPhone 11", "iPhone 12", "iPhone 13"]
+};
+
+document.getElementById("marca").addEventListener("change", function() {
+    const modelo = document.getElementById("modelo");
+    modelo.innerHTML = "<option value=''>Selecione o modelo</option>";
+
+    if (modelos[this.value]) {
+        modelos[this.value].forEach(m => {
+            let opt = document.createElement("option");
+            opt.value = m;
+            opt.textContent = m;
+            modelo.appendChild(opt);
+        });
+    }
+});
+
+function gerarSense() {
+    if (!marca.value || !modelo.value) {
+        alert("Selecione marca e modelo!");
+        return;
+    }
+
+    document.getElementById("dpi").textContent = Math.floor(Math.random() * 200 + 400);
+    document.getElementById("geral").textContent = Math.floor(Math.random() * 50 + 90);
+    document.getElementById("red").textContent = Math.floor(Math.random() * 30 + 80);
+    document.getElementById("x2").textContent = Math.floor(Math.random() * 30 + 70);
+    document.getElementById("x4").textContent = Math.floor(Math.random() * 30 + 60);
+    document.getElementById("awm").textContent = Math.floor(Math.random() * 30 + 50);
+
+    document.getElementById("resultado").style.display = "block";
 }
-addEventListener("resize",check);check();
-
-/* RELOGIO */
-setInterval(()=>{
-  clock.innerText=new Date().toLocaleTimeString();
-},1000);
-
-/* START */
-start.onclick=()=>menu.style.display=menu.style.display==="flex"?"none":"flex";
-
-/* ABRIR APPS */
-document.querySelectorAll('[data-url]').forEach(el=>{
-  el.onclick=()=>{
-    window.open(el.dataset.url,'_blank');
-  }
-});
-
-/* CURSOR */
-let c=document.getElementById("cursor");
-document.addEventListener("touchstart",e=>{
-  c.style.display="block";
-  c.style.left=e.touches[0].clientX+"px";
-  c.style.top=e.touches[0].clientY+"px";
-});
-document.addEventListener("touchmove",e=>{
-  c.style.left=e.touches[0].clientX+"px";
-  c.style.top=e.touches[0].clientY+"px";
-});
-document.addEventListener("touchend",()=>{
-  setTimeout(()=>c.style.display="none",500);
-});
 </script>
-
 </body>
 </html>
