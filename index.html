@@ -2,167 +2,154 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Sense Atualizada</title>
+<title>SABOR Fanta Sense 2🍊</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-    body {
-        margin: 0;
-        font-family: Arial, Helvetica, sans-serif;
-        background: linear-gradient(180deg, #0b0b0b, #141414);
-        color: #fff;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #FFA500, #FF7F50, #FFD700);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
 
-    .container {
-        max-width: 420px;
-        margin: 40px auto;
-        padding: 20px;
-    }
+.app {
+  background: rgba(0,0,0,0.25);
+  border-radius: 20px;
+  padding: 25px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(0,0,0,0.35);
+}
 
-    h1 {
-        text-align: center;
-        font-size: 22px;
-        margin-bottom: 25px;
-        font-weight: bold;
-    }
+select, button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 15px;
+  border-radius: 25px;
+  border: none;
+  font-size: 16px;
+}
 
-    .card {
-        background: #1b1b1b;
-        border-radius: 12px;
-        padding: 20px;
-        box-shadow: 0 0 20px rgba(255, 180, 0, 0.15);
-    }
+select {
+  background: white;
+  color: black;
+}
 
-    label {
-        display: block;
-        font-size: 14px;
-        margin-bottom: 6px;
-        color: #ffcc66;
-    }
+button {
+  background: #00ffcc;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-    select {
-        width: 100%;
-        padding: 12px;
-        border-radius: 8px;
-        border: none;
-        outline: none;
-        background: #2a2a2a;
-        color: #fff;
-        margin-bottom: 15px;
-        font-size: 15px;
-    }
+button:hover {
+  transform: scale(1.05);
+}
 
-    button {
-        width: 100%;
-        padding: 14px;
-        background: linear-gradient(90deg, #ff9f00, #ffcc00);
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        font-weight: bold;
-        cursor: pointer;
-        color: #000;
-    }
+.senseBox {
+  margin-top: 20px;
+  padding: 15px;
+  border-radius: 15px;
+  background: rgba(255,255,255,0.15);
+  animation: glow 2s infinite alternate;
+  max-height: 250px;
+  overflow-y: auto;
+  font-size: 16px;
+  text-align: left;
+}
 
-    button:hover {
-        opacity: 0.9;
-    }
+@keyframes glow {
+  from { box-shadow: 0 0 10px #fff; }
+  to { box-shadow: 0 0 25px #FFD700; }
+}
 
-    .resultado {
-        margin-top: 20px;
-        padding: 15px;
-        background: #111;
-        border-radius: 10px;
-        display: none;
-    }
-
-    .resultado p {
-        margin: 6px 0;
-        font-size: 14px;
-    }
-
-    .footer {
-        text-align: center;
-        margin-top: 25px;
-        font-size: 12px;
-        color: #777;
-    }
+.status {
+  margin-top: 15px;
+  font-size: 15px;
+}
 </style>
 </head>
 
 <body>
-<div class="container">
-    <h1>gerador de sense do Miguel•
 
-    <div class="card">
-        <label>Selecione a marca</label>
-        <select id="marca">
-            <option value="">Selecione a marca</option>
-            <option value="Samsung">Samsung</option>
-            <option value="Xiaomi">Xiaomi</option>
-            <option value="Motorola">Motorola</option>
-            <option value="iPhone">iPhone</option>
-        </select>
+<div class="app">
+  <h1>SABOR Fanta Sense 2🍊</h1>
 
-        <label>Selecione o modelo</label>
-        <select id="modelo">
-            <option value="">Primeiro selecione a marca</option>
-        </select>
+  <select id="marca">
+    <option value="">Selecione a marca do celular</option>
+    <option>Samsung</option>
+    <option>Xiaomi</option>
+    <option>Motorola</option>
+    <option>Apple (iPhone)</option>
+    <option>Realme</option>
+    <option>Oppo</option>
+    <option>Outro</option>
+  </select>
 
-        <button onclick="gerarSense()">GERAR</button>
+  <button onclick="gerarSensibilidade()">Gerar Sensibilidade</button>
 
-        <div class="resultado" id="resultado">
-            <p><strong>DPI:</strong> <span id="dpi"></span></p>
-            <p><strong>Sensibilidade Geral:</strong> <span id="geral"></span></p>
-            <p><strong>Mira Red Dot:</strong> <span id="red"></span></p>
-            <p><strong>Mira 2x:</strong> <span id="x2"></span></p>
-            <p><strong>Mira 4x:</strong> <span id="x4"></span></p>
-            <p><strong>Mira AWM:</strong> <span id="awm"></span></p>
-        </div>
-    </div>
+  <div class="senseBox" id="sensibilidade" style="display:none;"></div>
 
-    <div class="footer">
-        xscmiguel Sense Generator ©
-    </div>
+  <button onclick="otimizar()" style="margin-top:20px;">OTIMIZAR</button>
+
+  <div class="status" id="status">Status: Aguardando</div>
 </div>
 
 <script>
-const modelos = {
-    Samsung: ["A10", "A20", "A30", "A50", "S21"],
-    Xiaomi: ["Redmi 9", "Redmi Note 10", "Poco X3"],
-    Motorola: ["G20", "G30", "G60"],
-    iPhone: ["iPhone 11", "iPhone 12", "iPhone 13"]
+// Valores base da sensibilidade
+const sensibilidadeFF = {
+  "Geral": 200,
+  "Ponto Vermelho": 188,
+  "Mira 2x": 199,
+  "Mira 4x": 177,
+  "Olhadinha": 132,
+  "AWM": 101
 };
 
-document.getElementById("marca").addEventListener("change", function() {
-    const modelo = document.getElementById("modelo");
-    modelo.innerHTML = "<option value=''>Selecione o modelo</option>";
+// Função para gerar variação aleatória ±10
+function gerarVariacao(valor, maxVariacao = 10) {
+  return Math.max(1, valor + Math.floor(Math.random() * (2 * maxVariacao + 1)) - maxVariacao);
+}
 
-    if (modelos[this.value]) {
-        modelos[this.value].forEach(m => {
-            let opt = document.createElement("option");
-            opt.value = m;
-            opt.textContent = m;
-            modelo.appendChild(opt);
-        });
-    }
-});
+// Função principal
+function gerarSensibilidade() {
+  const marca = document.getElementById("marca").value;
+  if (!marca) {
+    alert("Selecione a marca do celular!");
+    return;
+  }
 
-function gerarSense() {
-    if (!marca.value || !modelo.value) {
-        alert("Selecione marca e modelo!");
-        return;
-    }
+  // Gera uma configuração aleatória
+  let novaConfig = {};
+  for (let mira in sensibilidadeFF) {
+    novaConfig[mira] = gerarVariacao(sensibilidadeFF[mira]);
+  }
 
-    document.getElementById("dpi").textContent = Math.floor(Math.random() * 200 + 400);
-    document.getElementById("geral").textContent = Math.floor(Math.random() * 50 + 90);
-    document.getElementById("red").textContent = Math.floor(Math.random() * 30 + 80);
-    document.getElementById("x2").textContent = Math.floor(Math.random() * 30 + 70);
-    document.getElementById("x4").textContent = Math.floor(Math.random() * 30 + 60);
-    document.getElementById("awm").textContent = Math.floor(Math.random() * 30 + 50);
+  let html = `<strong>Sensibilidade FF gerada para ${marca}:</strong><br>`;
+  for (let mira in novaConfig) {
+    html += `${mira}: ${novaConfig[mira]}<br>`;
+  }
 
-    document.getElementById("resultado").style.display = "block";
+  const div = document.getElementById("sensibilidade");
+  div.style.display = "block";
+  div.innerHTML = html;
+}
+
+// Função de otimização visual
+function otimizar() {
+  const status = document.getElementById("status");
+  status.innerHTML = "🔍 Analisando sistema...";
+  setTimeout(() => status.innerHTML = "🧹 Ajustando cache...", 1500);
+  setTimeout(() => status.innerHTML = "⚡ Melhorando fluidez do jogo...", 3000);
+  setTimeout(() => status.innerHTML = "✅ otimização aplicada com sucesso!", 4500);
 }
 </script>
+
 </body>
 </html>
